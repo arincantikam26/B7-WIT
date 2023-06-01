@@ -15,17 +15,20 @@
                 </div>
             </div>
             <div class="row">
+                {% for pItem in object_list %}
                 <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                     <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s">
                         <div class="popular-img">
-                            <img src="{% static 'img/product/product-1.jpg' %}" alt="">
+                            <img src="{{ pItem.gambar.url }}" alt="">
                             <div class="favorit-items">
                                 <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
+                                <span class="badge bg-{{ pItem.get_label_display }} ms-2">{{ pItem.label }}</span>
                             </div>
                         </div>
                         <div class="popular-caption">
-                            <h3><a href="product_details.html">Knitted Jumper</a></h3>
+                            <h3><a href="{{ pItem.get_absolute_url }}">{{ pItem.nama_produk }}</a></h3>
+                            <p>{{ pItem.get_kategori_display }}</p>
+                            
                             <div class="rating mb-10">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -33,165 +36,13 @@
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                             </div>
-                            <span>$ 30.00</span>
+                            <span>${% if pItem.harga_diskon %}{{ pItem.harga_diskon }}{% else %}{{ pItem.harga }}{% endif %}</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".2s">
-                        <div class="popular-img">
-                            <img src="{% static 'img/product/product-2.jpg' %}" alt="">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                        </div>
-                        <div class="popular-caption">
-                            <h3><a href="product_details.html">Knitted Jumper</a></h3>
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span>$ 30.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".3s">
-                        <div class="popular-img">
-                            <img src="{% static 'img/product/product-3.jpg' %}" alt="">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                        </div>
-                        <div class="popular-caption">
-                            <h3><a href="product_details.html">Knitted Jumper</a></h3>
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span>$ 30.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".4s">
-                        <div class="popular-img">
-                            <img src="{% static 'img/product/product-4.jpg' %}" alt="">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                        </div>
-                        <div class="popular-caption">
-                        <h3><a href="product_details.html">Knitted Jumper</a></h3>
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span>$ 30.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".5s">
-                        <div class="popular-img">
-                            <img src="{% static 'img/product/product-5.jpg' %}" alt="">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                        </div>
-                        <div class="popular-caption">
-                            <h3><a href="product_details.html">Knitted Jumper</a></h3>
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span>$ 30.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".6s">
-                        <div class="popular-img">
-                            <img src="{% static 'img/product/product-6.jpg' %}" alt="">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                        </div>
-                        <div class="popular-caption">
-                            <h3><a href="product_details.html">Knitted Jumper</a></h3>
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span>$ 30.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".7s">
-                        <div class="popular-img">
-                            <img src="{% static 'img/product/product-7.jpg' %}" alt="">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                        </div>
-                        <div class="popular-caption">
-                            <h3><a href="product_details.html">Knitted Jumper</a></h3>
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span>$ 30.00</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".8s">
-                        <div class="popular-img">
-                            <img src="{% static 'img/product/product-8.jpg' %}" alt="">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <i class="fa-solid fa-thumbs-up"></i>
-                            </div>
-                        </div>
-                        <div class="popular-caption">
-                            <h3><a href="product_details.html">Knitted Jumper</a></h3>
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span>$ 30.00</span>
-                        </div>
-                    </div>
-                </div>
-              
+                {% empty %}
+                  <p>Data Produk belum tersedia</p>
+                {% endfor %}
             </div>
             <!-- Button -->
             <div class="row justify-content-center">

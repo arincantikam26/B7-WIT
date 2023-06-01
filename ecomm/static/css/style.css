@@ -768,6 +768,15 @@ ol {
 	font-size:30px;
 	cursor:pointer
 }
+
+.new-arrival .single-new-arrival .popular-img .favorit-items .badge {
+	color: white;
+	padding: 4px 8px;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 15px;
+}
+
 .new-arrival .single-new-arrival .popular-img .favorit-items img{width:44px;height:44px}
 .new-arrival .single-new-arrival .popular-caption{
 	border:1px solid #F6F8FE;
