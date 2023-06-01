@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="B7 WIT E-Commerce">
+    <meta name="keywords" content="e-commerce, women, kominfo">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{% static 'img/favicon.ico' %}">
+    <title>e-commerce {% block head_title %}{% endblock %}</title>
+
+    {% include 'partials/style.html' %}
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    {% include 'partials/header.html' %}
+
+    {% block content %}
+    {% endblock content %}
+
+    {% include 'partials/footer.html' %}
+
+    <!-- Scroll Up -->
+    <div id="back-top" >
+        <a title="Go to Top" href="#"> <i class="fa-solid fa-turn-up"></i></a>
+    </div>
+
+    {% include 'partials/scripts.html' %}
+
+
+    {% block scripts %}
+    {% endblock scripts %}
+    
+</body>
+
+</html>
