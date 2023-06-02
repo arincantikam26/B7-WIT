@@ -15,41 +15,52 @@
                 </div>
             </div>
             <div class="row">
-                {% for pItem in products %}
-                <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6">
-                    <div class="single-new-arrival mb-50 text-center wow fadeInUp" data-wow-duration="1s" data-wow-delay=".1s">
-                        <div class="popular-img">
-                            <img src="{{ pItem.gambar.url }}" alt="{{ pItem.nama_produk }}">
-                            <div class="favorit-items">
-                                <!-- <span class="flaticon-heart"></span> -->
-                                <span class="badge bg-{{ pItem.get_label_display }} ms-2">{{ pItem.label }}</span>
+                <div class="col-lg-12">
+                    <ul class="filter__controls">
+                        <li class="active" data-filter="*">All</li>
+                        <li data-filter=".B">Baju</li>
+                        <li data-filter=".S">Sepatu</li>
+                        <li data-filter=".T">Tas</li>
+                        <li>
+                            <input type="text" id="filter-input" placeholder="Filter berdasarkan kategori">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row product__filter" id="galeri-container">
+                
+                    {% for pItem in products %}
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mix {{ pItem.kategori }} galeri-item" data-kategori="{{ pItem.nama_produk }}">
+                        <div class="single-new-arrival mb-50 text-center wow fadeInUp" id="data-galeri" data-wow-duration="1s" data-wow-delay=".1s">
+                            <div class="popular-img">
+                                <img src="{{ pItem.gambar.url }}" alt="{{ pItem.nama_produk }}">
+                                <div class="favorit-items">
+                                    <!-- <span class="flaticon-heart"></span> -->
+                                    <span class="badge bg-{{ pItem.get_label_display }} ms-2">{{ pItem.label }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="popular-caption">
-                            <h3><a href="{{ pItem.get_absolute_url }}">{{ pItem.nama_produk }}</a></h3>
-                            <p>{{ pItem.get_kategori_display }}</p>
-                            
-                            <div class="rating mb-10">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
+                            <div class="popular-caption">
+                                <h3><a href="{{ pItem.get_absolute_url }}">{{ pItem.nama_produk }}</a></h3>
+                                <p>{{ pItem.get_kategori_display }}</p>
+                                
+                                <div class="rating mb-10">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span>Rp. {% if pItem.harga_diskon %}{{ pItem.harga_diskon }}{% else %}{{ pItem.harga }}{% endif %}</span>
                             </div>
-                            <span>Rp. {% if pItem.harga_diskon %}{{ pItem.harga_diskon }}{% else %}{{ pItem.harga }}{% endif %}</span>
                         </div>
                     </div>
+                    {% empty %}
+                    <div class="col-md-12 text-center my-5">
+                        <h2>(Data Produk belum tersedia)</h2>   
+                    </div>
+                    {% endfor %}
                 </div>
-                {% empty %}
-                <div class="col-md-12 text-center my-5">
-                    <h2>(Data Produk belum tersedia)</h2>   
-                </div>
-                <div style="text-align: center;">
-                    
-                </div>
-                    
-                {% endfor %}
-            </div>
+            
             <!-- Button -->
             <div class="row justify-content-center">
                 <div class="room-btn">
@@ -153,6 +164,26 @@
         </div>
     </section>
     <!-- Latest Blog Section End -->
+
+    <script>
+        const filterInput = document.getElementById('filter-input');
+        const galeriContainer = document.getElementById('galeri-container');
+        const galeriItems = Array.from(document.getElementsByClassName('galeri-item'));
+        
+        filterInput.addEventListener('input', () => {
+            const filterValue = filterInput.value.toLowerCase();
+            
+            galeriItems.forEach((galeriItem) => {
+                const kategori = galeriItem.getAttribute('data-kategori').toLowerCase();
+                
+                if (kategori.includes(filterValue)) {
+                    galeriItem.style.display = 'block';
+                } else {
+                    galeriItem.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
 
 {% endblock content %}

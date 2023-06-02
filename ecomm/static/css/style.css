@@ -87,6 +87,7 @@ p {
 
 img {
 	max-width: 100%;
+	height: auto;
 }
 
 input:focus,
@@ -940,7 +941,13 @@ ol {
 }
 
 .new-arrival.new-arrival2{padding:0}
-.new-arrival .single-new-arrival .popular-img{overflow:hidden;position:relative}
+.new-arrival .single-new-arrival .popular-img{
+	overflow:hidden;
+	position:relative;
+	max-width: 100%;
+	height: auto;
+
+}
 .new-arrival .single-new-arrival .popular-img img{width:100%}
 .new-arrival .single-new-arrival .popular-img .favorit-items{
 	position:absolute;
