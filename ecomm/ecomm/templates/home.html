@@ -22,7 +22,7 @@
                         <li data-filter=".S">Sepatu</li>
                         <li data-filter=".T">Tas</li>
                         <li>
-                            <input type="text" id="filter-input" placeholder="Filter berdasarkan kategori">
+                            <input type="text" id="filter-input" placeholder="Cari ...">
                         </li>
                     </ul>
                 </div>
@@ -30,7 +30,7 @@
             <div class="row product__filter" id="galeri-container">
                 
                     {% for pItem in products %}
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mix {{ pItem.kategori }} galeri-item" data-kategori="{{ pItem.nama_produk }}">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3 mix {{ pItem.kategori }} galeri-item" data-kategori="{{ pItem.nama_produk }}">
                         <div class="single-new-arrival mb-50 text-center wow fadeInUp" id="data-galeri" data-wow-duration="1s" data-wow-delay=".1s">
                             <div class="popular-img">
                                 <img src="{{ pItem.gambar.url }}" alt="{{ pItem.nama_produk }}">
@@ -134,7 +134,7 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="{% static 'img/blog/blog-1.jpg' %}"></div>
                         <div class="blog__item__text">
-                            <span><img src="{% static 'img/icon/calendar.png' %}" alt=""> 16 February 2020</span>
+                            <span><i class="fa-regular fa-calendar"></i> 16 February 2020</span>
                             <h5>What Curling Irons Are The Best Ones</h5>
                             <a href="#">Read More</a>
                         </div>
@@ -144,7 +144,7 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="{% static 'img/blog/blog-2.jpg' %}"></div>
                         <div class="blog__item__text">
-                            <span><img src="{% static 'img/icon/calendar.png' %}" alt=""> 21 February 2020</span>
+                            <span><i class="fa-regular fa-calendar"></i> 21 February 2020</span>
                             <h5>Eternity Bands Do Last Forever</h5>
                             <a href="#">Read More</a>
                         </div>
@@ -154,7 +154,7 @@
                     <div class="blog__item">
                         <div class="blog__item__pic set-bg" data-setbg="{% static 'img/blog/blog-3.jpg' %}"></div>
                         <div class="blog__item__text">
-                            <span><img src="{% static 'img/icon/calendar.png' %}" alt=""> 28 February 2020</span>
+                            <span><i class="fa-regular fa-calendar"></i> 28 February 2020</span>
                             <h5>The Health Benefits Of Sunglasses</h5>
                             <a href="#">Read More</a>
                         </div>
@@ -183,6 +183,7 @@
                 }
             });
         });
+
     </script>
 
 

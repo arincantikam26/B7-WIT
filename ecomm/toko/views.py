@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from .models import ProdukItem
-from .forms import RegistrationForm
+from django.contrib import messages
+from django.utils import timezone
 
 # Create your views here.
 def HomeListView(request):
@@ -20,21 +22,8 @@ def ContactView(request):
     item = 1
     return render(request, 'contact.html', {'item': item})
 
+def ProductDetailView(request, slug):
+    products = get_object_or_404(ProdukItem, slug=slug)
+    return render(request, 'product_detail.html', {'products': products, 'slug': slug})
 
-def LoginUser(request):
-    if request.method == 'POST':
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            # berhasil login -> home yang sudah bisa belanja
-            form.save()
-            return redirect('login')  # Ganti dengan URL halaman login yang sesuai
-    else:
-        # kalo belum maka ulangi halaman form
-        form = RegistrationForm()
-    
-    return render(request, 'loginuser.html', {'form': form})
-
-def TestView(request):
-    item = 1
-    return render(request, 'test.html', {'item': item})
 

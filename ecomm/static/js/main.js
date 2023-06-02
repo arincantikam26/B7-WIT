@@ -213,4 +213,24 @@
         });
     });
 
+    /*  2. sticky And Scroll UP */
+    $(window).on('scroll', function () {
+      var scroll = $(window).scrollTop();
+      if (scroll < 400) {
+        $(".header__logo").removeClass("sticky-bar");
+        $('#back-top').fadeOut(500);
+      } else {
+        $(".header__logo").addClass("sticky-bar");
+        $('#back-top').fadeIn(500);
+      }
+    });
+
+  // Scroll Up
+    $('#back-top a').on("click", function () {
+      $('body,html').animate({
+        scrollTop: 0
+      }, 800);
+      return false;
+    });
+
 })(jQuery);

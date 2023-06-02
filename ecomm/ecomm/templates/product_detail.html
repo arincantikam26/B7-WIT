@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+	<div class="single-product">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5">
+					<div class="single-product-img">
+						<img src="{{ products.gambar.url }}" alt="">
+					</div>
+					<div class="label mt-3">
+						<a href="">
+                            <span class="badge badge-dark me-1">{{ products.get_kategori_display }}</span>
+                        </a>
+						{% if object.label == 'NEW' %}
+                        <a href="">
+                            <span class="badge badge-{{ products.get_label_display }} me-1">New</span>
+                        </a>
+                        {% elif object.label == 'SALE' %}
+                        <a href="">
+                            <span class="badge badge-{{ products.get_label_display }} me-1">Sale</span>
+                        </a>
+                        {% else %}
+                        <a href="">
+                            <span class="badge badge-{{ products.get_label_display }} me-1">Bestseller</span>
+                        </a>
+                        {% endif %}
+					</div>
+				</div>
+				<div class="col-md-7 mt-5">
+					<div class="single-product-content">
+						<h3>{{ products.nama_produk }}</h3>
+						<p class="single-product-pricing my-3">
+							{% if products.harga_diskon %}
+								<span class="me-1">
+									<del>Rp. {{ products.harga }}</del>
+								</span>
+								Rp. {{ products.harga_diskon }}
+							{% else %}
+								Rp. {{ products.harga }}
+							{% endif %}
+						
+						</p>
+						<p class="mb-3">{{ products.deskripsi }}</p>
+						<div class="single-product-form mt-3">
+							<a href="cart.html" class="cart-btn"><i class="fa-solid fa-cart-plus"></i>Tambah Keranjang</a>
+							<a href="cart.html" class="cart-btn2 ml-3"><i class="fas fa-shopping-cart"></i>Kurangi Keranjang</a>
+						</div>
+				
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end single product -->
+
+{% endblock content %}

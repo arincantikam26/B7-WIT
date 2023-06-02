@@ -22,9 +22,9 @@
             <div class="col-lg-6 col-md-6">
                 <nav class="header__menu mobile-menu">
                     <ul>
-                        <li class="active"><a href="/">Home</a></li>
-                        <li><a href="{% url 'toko:shop' %}">Shop</a></li>
-                        <li><a href="{% url 'toko:contact' %}">Contacts</a></li>
+                        <li {% if request.path == '/' %}class="active"{% endif %}><a href="/">Home</a></li>
+                        <li {% if request.path == "/shop/" %}class="active"{% endif %}><a href="{% url 'toko:shop' %}">Shop</a></li>
+                        <li {% if request.path == "/contact/" %}class="active"{% endif %}><a href="{% url 'toko:contact' %}">Contacts</a></li>
                     </ul>
                 </nav>
             </div>
