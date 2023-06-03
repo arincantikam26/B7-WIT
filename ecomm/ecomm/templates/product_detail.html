@@ -5,7 +5,7 @@
 	<div class="single-product">
 		<div class="container">
 			<div class="row text-center">
-				<div class="col-md-6 col-sm-12">
+				<div class="col-md-6 col-sm-12 d-flex justify-content-center">
 					<div class="single-product-img">
 						<div class="img-product">
 							<img src="{{ products.gambar.url }}" alt="">
@@ -30,7 +30,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-6 col-sm-12 mt-5">
+				<div class="col-md-6 col-sm-12 mt-5 d-flex justify-content-center">
 					<div class="single-product-content">
 						<h3>{{ products.nama_produk }}</h3>
 						<p class="single-product-pricing my-3">
@@ -46,8 +46,7 @@
 						</p>
 						<p class="mb-3">{{ products.deskripsi }}</p>
 						<div class="single-product-form mt-3">
-							<a href="cart.html" class="cart-btn"><i class="fa-solid fa-cart-plus"></i>Tambah Keranjang</a>
-							<a href="cart.html" class="cart-btn2 ml-3"><i class="fas fa-shopping-cart"></i>Kurangi Keranjang</a>
+							<a href="{{ products.get_add_to_cart_url }}" class="cart-btn mt-3"><i class="fa-solid fa-cart-plus"></i>Tambah Keranjang</a>
 						</div>
 				
 					</div>

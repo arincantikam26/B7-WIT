@@ -1,8 +1,14 @@
-/* .contact{
-    background-image: url('../img/260279.jpg');
+.contact{
+    width: 100%;
+    height: auto;
+    background-image: url('../img/bg4.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-} */
+    background-position: center center;
+ 
+}
+
+
 
 .contact h2 {
     padding-top: 10px;
@@ -21,6 +27,8 @@
     text-align: center;
     box-shadow: 0 5px 10px rgba(0,0,0,.2);
     display: flex;
+    background-color: #B38867;
+    color: #FDFFFF;
     justify-content: center;
     align-items: center;
     min-height: 220px;
@@ -29,10 +37,17 @@
 .card__item h3 {
    font-weight: 300;
    margin-bottom: 15px;
+   color: #FDFFFF;
+   
 }
 .card__item i {
     font-size: 35px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    color: #1F232C;
+    text-shadow: 2px 2px 4px #FDFFFF;
+}
+.card__item p {
+    color: #FDFFFF;
 }
 
 .map__contact {
