@@ -26,4 +26,7 @@ def ProductDetailView(request, slug):
     products = get_object_or_404(ProdukItem, slug=slug)
     return render(request, 'product_detail.html', {'products': products, 'slug': slug})
 
+def RegisterView(request):
+    return HttpResponse('haloga')
+
 

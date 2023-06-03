@@ -8,4 +8,5 @@ urlpatterns = [
     path('product/<slug>/', views.ProductDetailView, name='produk-detail'),
     path('shop/', views.ShopView, name='shop'),
     path('contact/', views.ContactView, name='contact'),
+    path('testing/', views.RegisterView, name='testing'),
 ]

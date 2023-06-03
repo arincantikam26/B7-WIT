@@ -2,6 +2,100 @@
 {% load static %}
 {% block content %}
 
-    <h1>Contact</h1>
+<div class="contact">
+    <div class="container">
+        <h2>Contact Us</h2>
+        <div class="row card__item">
+            <div class="col-md-3">
+                <div class="card">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>Alamat</h3>
+                    <p>Jl. Sarinah No. 9, Jakarta Pusat, Indonesia</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <i class="fa-regular fa-clock"></i>
+                    <h3>Operasional</h3>
+                    <p>Senin-Jum'at : 9 - 8 PM<br>
+                        Sabtu-Minggu : 10 - 7 PM
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <i class="fa-regular fa-address-book"></i>
+                    <h3>Kontak</h3>
+                    <p>Contact : +62 890 1242 234<br>
+                        Email: b7legacy@gmail.com
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <i class="fa-regular fa-star"></i>
+                    <h3>Social Media</h3>
+                    <p>ig : @b7legacy</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <div class="form__contact">
+                    <h3>Apakah anda punya pertanyaan?</h3>
+                    <p>Selalu sedia 24 jam per hari, silahkan dihubungi.</p>
+                    <form class="needs-validation" action="" novalidate>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" value="" required>
+                            <div class="valid-feedback">
+                            Looks good!
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" name="email" id="email"  placeholder="Enter your email" aria-describedby="inputGroupPrepend3" required>
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea name="msg" class="form-control" id="msg" cols="30" rows="10" placeholder="Enter your message"></textarea>
+                        </div>
+                        <input type="submit" value="submit" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="map__contact">
+                    <h3>Temukan kami disini!</h3>
+                    <p>Hai apa kabar mu?</p>
+                    <div class="map">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111551.9926412813!2d-90.27317134641879!3d38.606612219170856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x54eab584e432360b%3A0x1c3bb99243deb742!2sUnited%20States!5e0!3m2!1sen!2sbd!4v1597926938024!5m2!1sen!2sbd" height="300" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+        });
+    }, false);
+    })();
+</script>
 
 {% endblock content %}

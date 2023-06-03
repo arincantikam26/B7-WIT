@@ -1,0 +1,44 @@
+/* .contact{
+    background-image: url('../img/260279.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+} */
+
+.contact h2 {
+    padding-top: 10px;
+    margin-bottom: 50px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.card__item {
+    margin-bottom: 50px;
+}
+
+.card__item .card {
+    padding: 1.5em .5em .5em;
+    border-radius: 1em;
+    text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 220px;
+}
+
+.card__item h3 {
+   font-weight: 300;
+   margin-bottom: 15px;
+}
+.card__item i {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.map__contact {
+
+}
+
+.form__contact {
+
+}

@@ -22,17 +22,17 @@
 
     {% include 'partials/header.html' %}
     
-    <div class="mt-5 pt-4">
-        {% if messages %}
-            {% for message in messages %}
-            <div class="container">
-              <div class="alert alert-{{ message.tags }} alert-dismissable">
-                <strong>{{ message }}</strong>
-              </div>
-            </div>
-            {% endfor %}
-        {% endif %}
-      </div>
+ 
+    {% if messages %}
+        {% for message in messages %}
+        <div class="container">
+          <div class="alert alert-{{ message.tags }} alert-dismissable">
+            <strong>{{ message }}</strong>
+          </div>
+        </div>
+        {% endfor %}
+    {% endif %}
+      
 
     {% block content %}
     {% endblock content %}
