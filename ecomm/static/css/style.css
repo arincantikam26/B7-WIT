@@ -229,11 +229,11 @@ ol {
 
   }
 
-  .single-product-form .cart-btn {
+  .single-product-form .cart-btn .car-btn2 {
 	margin-top: 30px;
   }
 
-  .cart-btn {
+  .cart-btn{
 	-webkit-transition: 0.3s;
 	-o-transition: 0.3s;
 	transition: 0.3s;
@@ -243,13 +243,27 @@ ol {
 	background-color: var(--color-black);
 	color: #EDFAFD;
   }
+
+  .cart-btn2:hover {
+	background-color:  var(--color-black);
+	color: #EDFAFD;
+  }
   .cart-btn {
 	font-family: 'Poppins', sans-serif;
 	display: inline-block;
-	border: solid var(--color-black);
-	background-color: var(--color-latte);
-	color: var(--color-black);
+	background-color: #2A93D5;
+	color: #EDFAFD;
 	padding: 10px 20px;
+	border-radius: 50px;
+  }
+
+  .cart-btn2 {
+	font-family: 'Poppins', sans-serif;
+	display: inline-block;
+	background-color: #e23917;
+	color: #EDFAFD;
+	padding: 10px 20px;
+	border-radius: 50px;
   }
   
   .cart-btn i {
@@ -259,7 +273,7 @@ ol {
   .cart-btn2 i {
 	margin-right: 5px;
   }
-  a.boxed-btn, a.bordered-btn, .cart-btn{
+  a.boxed-btn, a.bordered-btn, .cart-btn .car-btn2{
 	border-radius: 50px;
   }
   
@@ -310,7 +324,7 @@ ol {
 .text-white span,
 .text-white li,
 .text-white a {
-	color: #fff;
+	color: var(--color-white);
 }
 
 /* buttons */
@@ -321,8 +335,9 @@ ol {
 	font-weight: 700;
 	text-transform: uppercase;
 	padding: 14px 30px;
-	color: #ffffff;
+	color: var(--color-white);
 	background: #000000;
+	border-radius: 30px;
 	letter-spacing: 4px;
 }
 
@@ -685,6 +700,9 @@ ol {
 	color: #0d0d0d;
 }
 
+.header__nav__option .badge {
+	font-size: 12px;
+}
 
 .header__nav__option a:last-child {
 	margin-right: 0;
@@ -2590,27 +2608,42 @@ ol {
 .shopping__cart__table table tbody tr td {
 	padding-bottom: 30px;
 	padding-top: 30px;
+	text-align: center;
+}
+
+.shopping__cart__table img{
+	width: 100%;
+	border-radius: 5px;
+	max-width: 50px;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	margin-bottom: 0;
+	overflow: hidden;
 }
 
 .shopping__cart__table table tbody tr td.product__cart__item {
-	width: 400px;
+	width: 100%;
 }
 
 .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__pic {
 	float: left;
-	margin-right: 30px;
+	margin-right: 20px;
 }
 
 .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__text {
 	overflow: hidden;
-	padding-top: 21px;
 }
 
 .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__text h6 {
-	color: var(--color-black);
+	color: #111111;
 	font-size: 15px;
-	font-weight: 600;
-	margin-bottom: 10px;
+	font-weight: 200;
+}
+
+.shopping__cart__table table tbody tr td.input__qty__chart input {
+	color: #111111;
+	font-size: 15px;
+	font-weight: 200;
 }
 
 .shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__text h5 {
@@ -2630,7 +2663,7 @@ ol {
 	width: 50px;
 	border: none;
 	text-align: center;
-	color: var(--color-black);
+	color: #111111;
 	font-size: 16px;
 }
 
@@ -2648,7 +2681,7 @@ ol {
 	width: 140px;
 }
 
-.shopping__cart__table table tbody tr td.cart__close i {
+/* .shopping__cart__table table tbody tr td.cart__close i {
 	font-size: 18px;
 	color: var(--color-black);
 	height: 40px;
@@ -2657,6 +2690,23 @@ ol {
 	border-radius: 50%;
 	line-height: 40px;
 	text-align: center;
+} */
+
+.shopping__cart__table table tbody tr td.cart__close a {
+	display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #b7b7b7;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.shopping__cart__table table tbody tr td.cart__close a:hover {
+	background-color: var(--color-primary);
+	color: var(--color-white);
 }
 
 .continue__btn.update__btn {
@@ -2664,9 +2714,10 @@ ol {
 }
 
 .continue__btn.update__btn a {
-	color: #ffffff;
-	background: #111111;
+	color: var(--color-white);
+	background: var(--color-black);
 	border-color: var(--color-black);
+	border-radius: 30px;
 }
 
 .continue__btn.update__btn a i {
@@ -2681,6 +2732,7 @@ ol {
 	text-transform: uppercase;
 	border: 1px solid #e1e1e1;
 	padding: 14px 35px;
+	border-radius: 30px;
 	display: inline-block;
 }
 
@@ -3900,6 +3952,9 @@ ol {
 		position: absolute;
 		left: 5px;
 		top: 8px;
+	}
+	.offcanvas__nav__option .badge {
+		font-size: 12px;
 	}
 	.offcanvas__nav__option a:last-child {
 		margin-right: 0;

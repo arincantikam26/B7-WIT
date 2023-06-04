@@ -2,6 +2,112 @@
 {% load static %}
 {% block content %}
 
-    <h1>Order Summary</h1>
+    
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="shopping__cart__table table-responsive">
+                        <table class="table table-borderless table-hover">
+                            <thead>
+                                <tr style="text-align: center;">
+                                    <th>No</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Total Qty</th>
+                                    <th>Total Harga</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for pItem in keranjang.produk_items.all %}
+                                <tr>
+                                    <td scope="row">
+                                        {{ forloop.counter }}
+                                    </td>
+                                    <td class="product__cart__item"> 
+                                        <div class="product__cart__item__pic">
+                                            <img src="{{ pItem.produk_item.gambar.url }}" alt="">
+                                        </div>
+                                        <div class="product__cart__item__text">
+                                            <h6>{{ pItem.produk_item.nama_produk }}</h6>
+                                            <h5>
+                                                {% if pItem.produk_item.harga_diskon %}
+                                                    <small>Rp</small> {{ pItem.produk_item.harga_diskon }}
+                                                {% else %}
+                                                    <small>Rp</small> {{ pItem.produk_item.harga }}
+                                                {% endif %}
+                                            </h5>
+                                        </div>  
+                                    </td>
+                                   
+                                    <td class="input__qty__chart">
+                                        <!-- <input type="number" class="qty" name="qty_{{ pItem.produk_item.slug }}" id="qty_{{ pItem.produk_item.slug }}" value="0" min="0">  -->
+
+                                        <div class="number-input">
+                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                                    <i class="fa-solid fa-minus"></i>
+                                                </button>
+                                                <input type="number" value="{{ pItem.quantity }}" name="{{ pItem.produk_item.slug }}" min="0">
+                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                                    <i class="fa-solid fa-plus"></i>
+                                                </button>
+                                          </div>
+                                    </td>
+                                    <td>{{ pItem.quantity }}</td>
+                                    <td class="cart__price">
+                                        {% if pItem.produk_item.harga_diskon %}
+                                            <small>Rp</small> {{ pItem.get_total_harga_diskon_item }}
+                                            <span class="badge badge-danger rounded-pill d-inline">Hemat <small>Rp</small> {{ pItem.get_total_hemat_item }}</span>
+                                        {% else %}
+                                            <small>Rp</small> {{ pItem.get_total_harga_item }}
+                                        {% endif %}
+                                    </td>
+                                    <td class="cart__close">
+                                        <a href="">
+                                            <i class="fa-regular fa-trash-can"></i>
+                                        </a>    
+                                    </td>
+
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan='5'>Keranjang kosong</td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                       
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn">
+                                <a href="{% url 'toko:home-produk-list' %}">Continue Shopping</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <div class="continue__btn update__btn">
+                                <a href="{% url 'toko:home-produk-list' %}"><i class="fa fa-spinner"></i> Update cart</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="cart__total">
+                        <h6>Cart total</h6>
+                        <ul>
+                            <li>Subtotal <span>$ 169.50</span></li>
+                            <li>Total <span>$ 169.50</span></li>
+                        </ul>
+                        <a href="#" class="primary-btn">Proceed to checkout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+
 
 {% endblock content %}

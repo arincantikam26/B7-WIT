@@ -8,8 +8,6 @@
  
 }
 
-
-
 .contact h2 {
     padding-top: 10px;
     margin-bottom: 50px;
@@ -49,11 +47,34 @@
 .card__item p {
     color: #FDFFFF;
 }
+.number-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 30px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+  }
 
-.map__contact {
+  .number-input button {
+    width: 30px;
+    height: 100%;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+  }
 
-}
+  .number-input button:hover {
+    background-color: #ddd;
+  }
 
-.form__contact {
-
-}
+  .number-input input[type="number"] {
+    width: 90px;
+    height: 100%;
+    border: none;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+  }

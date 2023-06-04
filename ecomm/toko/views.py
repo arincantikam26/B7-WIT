@@ -26,8 +26,16 @@ def ContactView(request):
     return render(request, 'contact.html', {'item': item})
 
 def OrderCartView(request):
-    item = 1
-    return render(request, 'order_summary.html', {'item': item})
+    try:
+        order = Order.objects.get(user=request.user, ordered=False)
+        context = {
+            'keranjang': order
+        }
+        template_name = 'order_summary.html'
+        return render(request, template_name, context)
+    except ObjectDoesNotExist:
+        messages.error(request, 'Tidak ada pesanan yang aktif')
+        return redirect('/')
 
 def ProductDetailView(request, slug):
     products = get_object_or_404(ProdukItem, slug=slug)
@@ -98,3 +106,36 @@ def add_to_cart(request, slug):
             cart_item = OrderProdukItem.objects.create(user=request.user, slug=slug, quantity=quantity)
     else:
         return redirect('toko:login')
+
+def remove_from_cart(request, slug):
+    if request.user.is_authenticated:
+        produk_item = get_object_or_404(ProdukItem, slug=slug)
+        order_query = Order.objects.filter(
+            user=request.user, ordered=False
+        )
+        if order_query.exists():
+            order = order_query[0]
+            if order.produk_items.filter(produk_item__slug=produk_item.slug).exists():
+                try: 
+                    order_produk_item = OrderProdukItem.objects.filter(
+                        produk_item=produk_item,
+                        user=request.user,
+                        ordered=False
+                    )[0]
+                    
+                    order.produk_items.remove(order_produk_item)
+                    order_produk_item.delete()
+
+                    pesan = f"ProdukItem sudah dihapus"
+                    messages.info(request, pesan)
+                    return redirect('toko:produk-detail',slug = slug)
+                except ObjectDoesNotExist:
+                    print('Error: order ProdukItem sudah tidak ada')
+            else:
+                messages.info(request, 'ProdukItem tidak ada')
+                return redirect('toko:produk-detail',slug = slug)
+        else:
+            messages.info(request, 'ProdukItem tidak ada order yang aktif')
+            return redirect('toko:produk-detail',slug = slug)
+    else:
+        return redirect('/accounts/login')
