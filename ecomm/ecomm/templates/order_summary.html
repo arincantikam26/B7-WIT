@@ -14,8 +14,7 @@
                                 <tr style="text-align: center;">
                                     <th>No</th>
                                     <th>Product</th>
-                                    <th>Qty</th>
-                                    <th>Total Qty</th>
+                                    <th>Jumlah</th>
                                     <th>Total Harga</th>
                                     <th></th>
                                 </tr>
@@ -27,38 +26,23 @@
                                         {{ forloop.counter }}
                                     </td>
                                     <td class="product__cart__item"> 
-                                        <div class="product__cart__item__pic">
-                                            <img src="{{ pItem.produk_item.gambar.url }}" alt="">
-                                        </div>
-                                        <div class="product__cart__item__text">
-                                            <h6 class="mb-2">
-                                                <a href="{{ pItem.produk_item.get_absolute_url }}">
+                                        <a href="{% url 'toko:produk-detail' pItem.produk_item.slug %}">
+                                            <div class="product__cart__item__pic">
+                                                <img src="{{ pItem.produk_item.gambar.url }}" alt="">
+                                            </div>
+                                            <div class="product__cart__item__text">
+                                                <h6 class="mb-2">
                                                     {{ pItem.produk_item.nama_produk }}
-                                                </a>
-                                            </h6>
-                                            <h5>
-                                                {% if pItem.produk_item.harga_diskon %}
-                                                    <small>Rp</small> {{ pItem.produk_item.harga_diskon }}
-                                                {% else %}
-                                                    <small>Rp</small> {{ pItem.produk_item.harga }}
-                                                {% endif %}
-                                            </h5>
-                                        </div>  
-                                    </td>
-                                   
-                                    <td class="input__qty__chart">
-                                        <!-- <input type="number" class="qty" name="qty_{{ pItem.produk_item.slug }}" id="qty_{{ pItem.produk_item.slug }}" value="0" min="0">  -->
-
-                                        <div class="number-input">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                                                    <i class="fa-solid fa-minus"></i>
-                                                </button>
-                                                
-                                                <input type="number" value="{{ pItem.quantity }}" name="{{ pItem.produk_item.slug }}" min="0">
-                                                <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </button>
-                                          </div>
+                                                </h6>
+                                                <h5>
+                                                    {% if pItem.produk_item.harga_diskon %}
+                                                        <small>Rp</small> {{ pItem.produk_item.harga_diskon }}
+                                                    {% else %}
+                                                        <small>Rp</small> {{ pItem.produk_item.harga }}
+                                                    {% endif %}
+                                                </h5>
+                                            </div>  
+                                        </a>
                                     </td>
                                     <td>{{ pItem.quantity }}</td>
                                     <td class="cart__price">
@@ -69,16 +53,16 @@
                                             <small>Rp</small> {{ pItem.get_total_harga_item }}
                                         {% endif %}
                                     </td>
-                                    <td class="cart__close">
-                                        <a href="{{ pItem.produk_item.get_remove_from_cart_url }}" onclick="return confirm('Ingin menghapus produk ?')">
+                                    <td class="cart">
+                                        <a href="{{ pItem.produk_item.get_remove_from_cart_url }}" class="del" onclick="return confirm('Ingin menghapus produk ?')">
                                             <i class="fa-regular fa-trash-can"></i>
                                         </a> 
                                     </td>
-
                                 </tr>
                                 {% empty %}
                                 <tr>
                                     <td colspan='5'>Keranjang kosong</td>
+                                  
                                 </tr>
                                 {% endfor %}
 
@@ -89,7 +73,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
                             <div class="continue__btn">
-                                <a href="{% url 'toko:home-produk-list' %}">Continue Shopping</a>
+                                <a href="{% url 'toko:home-produk-list' %}">Lanjut Belanja</a>
                             </div>
                         </div> 
                     </div>

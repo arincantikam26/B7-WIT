@@ -16,5 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
         behavior: 'smooth'
       });
     });
+    
   });
   
+  function scrollToTarget() {
+    const targetDiv = document.getElementById('section-tittle');
+    targetDiv.scrollIntoView({ behavior: 'smooth' });
+}

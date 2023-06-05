@@ -47,6 +47,7 @@
                     <h3>Apakah anda punya pertanyaan?</h3>
                     <p>Selalu sedia 24 jam per hari, silahkan dihubungi.</p>
                     <form class="needs-validation" action="" novalidate>
+                        {% csrf_token %}
                         <div class="form-group">
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" value="" required>
                             <div class="valid-feedback">
@@ -62,7 +63,7 @@
                         <div class="form-group">
                             <textarea name="msg" class="form-control" id="msg" cols="30" rows="5" placeholder="Enter your message"></textarea>
                         </div>
-                        <input type="submit" value="submit" class="btn btn-primary">
+                        <input type="submit" value="submit" class="btn btn-contact">
                     </form>
                 </div>
             </div>
@@ -98,6 +99,8 @@
         });
     }, false);
     })();
+
+    
 </script>
 
 {% endblock content %}

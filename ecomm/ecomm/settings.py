@@ -43,8 +43,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 
     'toko.apps.TokoConfig',
+
+    'django_countries',
+    'crispy_forms',
+    'crispy_bootstrap5',
+
+    'paypal.standard.ipn',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -70,7 +81,7 @@ ROOT_URLCONF = 'ecomm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'ecomm/templates')],
+         'DIRS': [os.path.join(BASE_DIR, 'ecomm/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,6 +99,13 @@ WSGI_APPLICATION = 'ecomm.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 DATABASES = {
     'default': {
@@ -120,6 +138,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
 PAYPAL_CLIENT_ID = env('PAYPAL_SANDBOX_CLIENT_ID')
 PAYPAL_SECRET_ID = env('PAYPAL_SANDBOX_SECRET_KEY')
 
@@ -130,7 +149,6 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 DEFAULT_FROM_EMAIL= env('DEFAULT_FROM_EMAIL')
 NOTIFY_EMAIL= env('NOTIFY_EMAIL')
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -143,19 +161,19 @@ USE_I18N = True
 
 USE_TZ = True
 
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
+LOGIN_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

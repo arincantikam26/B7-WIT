@@ -7,29 +7,34 @@
     <div class="new-arrival">
         <div class="container">
             <!-- Section tittle -->
-            <div class="row justify-content-center section-tittle">
+            <div class="row justify-content-center section-tittle" id="section-tittle">
                 <div class="col-xl-7 col-lg-8 col-md-10">
                     <div class="section-tittle mb-60 text-center wow fadeInUp" data-wow-duration="2s" data-wow-delay=".2s">
-                        <h2>new<br>arrival</h2>
+                        <h2>New<br>Arrival</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <ul class="filter__controls">
-                        <li class="active" data-filter="*">All</li>
-                        <li data-filter=".B">Baju</li>
-                        <li data-filter=".S">Sepatu</li>
-                        <li data-filter=".T">Tas</li>
+                            <li {% if kategori == '' or kategori == 'all' %} class="active" {% endif %}><a href="{% url 'toko:home-produk-list' %}?kategori=all">All</a></li>
+                            <li {% if kategori == 'B' %}class="active" {% endif %}><a href="{% url 'toko:home-produk-list' %}?kategori=B">Baju</a></li>
+                            <li {% if kategori == 'S' %}class="active" {% endif %}><a href="{% url 'toko:home-produk-list' %}?kategori=S">Sepatu</a></li>
+                            <li {% if kategori == 'T' %}class="active" {% endif %}><a href="{% url 'toko:home-produk-list' %}?kategori=T">Tas</a></li>
                         <li>
-                            <input type="text" id="filter-input" placeholder="Cari ...">
+                            <form method="get" action="{% url 'toko:home-produk-list' %}" id="search-form">
+                                <div class="form-group">
+                                    <input type="text" name="search" placeholder="Cari produk...">
+                                    <button type="submit" value="Cari" class="btn-primary">Cari</button>
+                                </div>
+                            </form>   
                         </li>
                     </ul>
                 </div>
             </div>
             <div class="row product__filter" id="galeri-container">
-                
-                    {% for pItem in products %}
+                {% for pItem in object_list %}
+                    
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3 mix {{ pItem.kategori }} galeri-item" data-kategori="{{ pItem.nama_produk }}">
                         <div class="single-new-arrival mb-50 text-center wow fadeInUp" id="data-galeri" data-wow-duration="1s" data-wow-delay=".1s">
                             <div class="popular-img">
@@ -43,52 +48,46 @@
                                 <h3><a href="{{ pItem.get_absolute_url }}">{{ pItem.nama_produk }}</a></h3>
                                 <p>{{ pItem.get_kategori_display }}</p>
                                 
-                                <div class="rating mb-10">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
+                                <div class="rating mb-3">
+                                    {% for _ in pItem.rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% endfor %}
                                 </div>
                                 <span>Rp. {% if pItem.harga_diskon %}{{ pItem.harga_diskon }}{% else %}{{ pItem.harga }}{% endif %}</span>
                             </div>
                         </div>
                     </div>
-                    {% empty %}
-                    <div class="col-md-12 text-center my-5">
-                        <h2>(Data Produk belum tersedia)</h2>   
-                    </div>
-                    {% endfor %}
+                    
+                {% empty %}
+                <div class="col-md-12 text-center my-5">
+                    <h2>(Data Produk belum tersedia)</h2>   
                 </div>
-            
-            <!-- Button -->
-            <div class="row justify-content-center">
-                <div class="room-btn">
-                    <a href="#" class="primary-btn">Browse More</a>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
     <!-- Product Section End -->
-    <!-- Pagination -->
-    <!-- Paginasi -->
-    <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-3">
+    {% if is_paginated %}
+    <nav aria-label="Page navigation example" class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item">
-                {% if products.has_previous %}
-                    <a href="?page=1">&laquo; first</a>
-                    <a href="?page={{ products.previous_page_number }}">previous</a>
-                {% endif %}
+              {% if page_obj.has_previous %}
+                <a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+              {% endif %}
             </li>
-            <li class="page-item active"><a class="page-link" href="#"><span class="current-page">{{ products.number }}</span></a></li>
+            <li class="page-item active"><a class="page-link" href="#">{{ page_obj.number }}</a></li>
             <li class="page-item">
-                {% if products.has_next %}
-                <a href="?page={{ products.next_page_number }}">next</a>
-                <a href="?page={{ products.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+              {% if page_obj.has_next %}
+                <a class="page-link" href="{{ request.path }}?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+              {% endif %}
             </li>
         </ul>
     </nav>
+    {% endif %}
     <!-- Pagination -->
 
     <!-- Instagram Section Begin -->
@@ -110,7 +109,7 @@
                         <h2>Instagram</h2>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
                         labore et dolore magna aliqua.</p>
-                        <h3>#Male_Fashion</h3>
+                        
                     </div>
                 </div>
             </div>
@@ -164,27 +163,6 @@
         </div>
     </section>
     <!-- Latest Blog Section End -->
-
-    <script>
-        const filterInput = document.getElementById('filter-input');
-        const galeriContainer = document.getElementById('galeri-container');
-        const galeriItems = Array.from(document.getElementsByClassName('galeri-item'));
-        
-        filterInput.addEventListener('input', () => {
-            const filterValue = filterInput.value.toLowerCase();
-            
-            galeriItems.forEach((galeriItem) => {
-                const kategori = galeriItem.getAttribute('data-kategori').toLowerCase();
-                
-                if (kategori.includes(filterValue)) {
-                    galeriItem.style.display = 'block';
-                } else {
-                    galeriItem.style.display = 'none';
-                }
-            });
-        });
-
-    </script>
 
 
 {% endblock content %}

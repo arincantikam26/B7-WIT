@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 
 	<div class="single-product">
@@ -8,23 +9,23 @@
 				<div class="col-md-6 col-sm-12 d-flex justify-content-center">
 					<div class="single-product-img">
 						<div class="img-product">
-							<img src="{{ products.gambar.url }}" alt="">
+							<img src="{{ object.gambar.url }}" alt="">
 						</div>
 						<div class="label mt-3">
 							<a href="">
-								<span class="badge badge-dark me-1">{{ products.get_kategori_display }}</span>
+								<span class="badge badge-dark me-1">{{ object.get_kategori_display }}</span>
 							</a>
 							{% if object.label == 'NEW' %}
 							<a href="">
-								<span class="badge badge-{{ products.get_label_display }} me-1">New</span>
+								<span class="badge badge-{{ object.get_label_display }} me-1">New</span>
 							</a>
 							{% elif object.label == 'SALE' %}
 							<a href="">
-								<span class="badge badge-{{ products.get_label_display }} me-1">Sale</span>
+								<span class="badge badge-{{ object.get_label_display }} me-1">Sale</span>
 							</a>
 							{% else %}
 							<a href="">
-								<span class="badge badge-{{ products.get_label_display }} me-1">Bestseller</span>
+								<span class="badge badge-{{ object.get_label_display }} me-1">Bestseller</span>
 							</a>
 							{% endif %}
 						</div>
@@ -32,23 +33,76 @@
 				</div>
 				<div class="col-md-6 col-sm-12 mt-5 d-flex justify-content-center">
 					<div class="single-product-content">
-						<h3>{{ products.nama_produk }}</h3>
+						<h3 class="mb-3">{{ object.nama_produk }}</h3>
+						<div class="rating mb-10">
+							{% for _ in object.rating %}
+								<i class="fa-solid fa-star" style="color: #ffea00;"></i>
+							{% endfor %}
+						</div>
 						<p class="single-product-pricing my-3">
-							{% if products.harga_diskon %}
+							{% if object.harga_diskon %}
 								<span class="me-1">
-									<del>Rp. {{ products.harga }}</del>
+									<del>Rp. {{ object.harga }}</del>
 								</span>
-								Rp. {{ products.harga_diskon }}
+								Rp. {{ object.harga_diskon }}
 							{% else %}
-								Rp. {{ products.harga }}
+								Rp. {{ object.harga }}
 							{% endif %}
 						
 						</p>
-						<p class="mb-3">{{ products.deskripsi }}</p>
+						<p class="mb-3">{{ object.deskripsi }}</p>
 						<div class="single-product-form mt-3">
-							<a href="{{ products.get_add_to_cart_url }}" class="cart-btn mt-3"><i class="fa-solid fa-cart-plus"></i>Tambah Keranjang</a>
+							<a href="{{ object.get_add_to_cart_url }}" class="cart-btn mt-3 mr-3"><i class="fa-solid fa-square-plus"></i> Tambah Keranjang</a>
+							<a href="{{ object.get_minus_from_cart_url }}" class="cart-btn2 mt-3"><i class="fa-solid fa-square-minus"></i> Kurangi Keranjang</a>
 						</div>
 				
+					</div>
+				</div>
+				
+				<div class="col-md-12 mt-5 mb-3">
+					<hr>
+					<h3 class="mb-5">Informasi Tambahan</h3>
+					<p>Produk andalan dari kami yang tidak akan mengecewakan anda!</p>
+					<p>Berikut detail tambahan dari produk kami.</p>
+					<div class="inform-additional mt-5">
+						{% for pImg in object.produkimage_set.all %}
+							<img src="{{ pImg.gambar.url }}" alt="">
+						{% empty %}
+							<p style="grid-column-start: 2;">No images available.</p>
+						{% endfor %}
+					</div>
+				</div>
+				
+				<div class="col-md-4 mt-3">
+					{% if request.user.is_authenticated %}
+					<p class="mb-3">Berikan komentar anda disini:</p>
+					<div class="comment-form">
+						<form method="post" action="{% url 'toko:produk-detail' object.slug %}">
+							{% csrf_token %}
+							{{ comment_form.as_p }}
+							<button type="submit" class="btn-primary">Kirim Komentar</button>
+						</form>
+					</div>
+					{% endif %}
+				</div>
+				
+				<div class="col-md-8 mt-3">
+					<h3>Komentar</h3>
+					<div class="comment">
+						{% for comment in object.comments.all %}
+							<div class="comment__item">
+								<h5 class="mb-2">
+									<b>{{ comment.user }}</b>
+									<small>{{ comment.created_at|naturaltime }}</small>
+								</h5>
+								<p>{{ comment.text }}</p>
+							</div>
+						{% empty %}
+							<div class="comment__item" style="grid-column-start: 2;">
+								<h6> Tidak ada komentar untuk produk ini.</h6>
+							</div>
+							
+						{% endfor %}
 					</div>
 				</div>
 			</div>
