@@ -229,7 +229,7 @@ ol {
 
   }
 
-  .single-product-form .cart-btn .car-btn2 {
+  .single-product-form .cart-btn {
 	margin-top: 30px;
   }
 
@@ -244,24 +244,11 @@ ol {
 	color: #EDFAFD;
   }
 
-  .cart-btn2:hover {
-	background-color:  var(--color-black);
-	color: #EDFAFD;
-  }
   .cart-btn {
 	font-family: 'Poppins', sans-serif;
 	display: inline-block;
-	background-color: #2A93D5;
-	color: #EDFAFD;
-	padding: 10px 20px;
-	border-radius: 50px;
-  }
-
-  .cart-btn2 {
-	font-family: 'Poppins', sans-serif;
-	display: inline-block;
-	background-color: #e23917;
-	color: #EDFAFD;
+	background-color: var(--color-latte);
+	color: var(--color-black);
 	padding: 10px 20px;
 	border-radius: 50px;
   }
@@ -270,10 +257,7 @@ ol {
 	margin-right: 5px;
   }
 
-  .cart-btn2 i {
-	margin-right: 5px;
-  }
-  a.boxed-btn, a.bordered-btn, .cart-btn .car-btn2{
+  a.boxed-btn, a.bordered-btn, .cart-btn{
 	border-radius: 50px;
   }
   
@@ -2634,11 +2618,17 @@ ol {
 	overflow: hidden;
 }
 
-.shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__text h6 {
+.shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__text h6 a {
 	color: #111111;
 	font-size: 15px;
 	font-weight: 200;
 }
+
+.shopping__cart__table table tbody tr td.product__cart__item .product__cart__item__text a:hover {
+	color: #00aeff;
+
+}
+
 
 .shopping__cart__table table tbody tr td.input__qty__chart input {
 	color: #111111;
@@ -2820,8 +2810,12 @@ ol {
 
 .cart__total ul li span {
 	font-weight: 700;
-	color: #e53637;
+	color: #0f0f0f;
 	float: right;
+}
+
+.cart__total .badge {
+	color: #fff1f1;
 }
 
 .cart__total .primary-btn {
