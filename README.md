@@ -9,11 +9,22 @@
 
 ### Running Program
 1. Migrasi database 
-'''
+```
 $ python manage.py makemigrations toko
 $ python manage.py migrate
-'''
+```
 2. Jalankan program
-'''
+```
 $ python manage.py runserver
-'''
+```
+
+### Copyright
+github : https://github.com/arincantikam26/Ecommerce_B7.git
+base template : https://themewagon.github.io/malefashion/
+
+### Team
+1. Arin Cantika Musi
+2. Ulrike Johanna Hutabarat
+3. Endang Febriawati
+4. Teresa Tri Wahyu Krisanti
+
