@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.humanize',
+    "sendemail.apps.SendemailConfig",  # new
 
     'allauth',
     'allauth.account',
@@ -142,6 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 PAYPAL_CLIENT_ID = env('PAYPAL_SANDBOX_CLIENT_ID')
 PAYPAL_SECRET_ID = env('PAYPAL_SANDBOX_SECRET_KEY')
 
+
 PAYPAL_RECEIVER_EMAIL = env('PAYPAL_RECEIVER_EMAIL')
 PAYPAL_TEST = env('PAYPAL_TEST', default=False, cast=bool)
 CORS_ORIGIN_ALLOW_ALL = True
@@ -212,3 +214,12 @@ if DEBUG is False:
     PAYPAL_SECRET_ID = env('PAYPAL_LIVE_SECRET_ID')
     PAYPAL_TEST=False
     PAYPAL_RECEIVER_EMAIL = env('PAYPAL_RECEIVER_EMAIL')
+
+    #NO RATE LIMIT 
+    ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 5
+    ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+    ACCOUNT_PASSWORD_MIN_LENGTH = 8
+    ACCOUNT_PASSWORD_REQUIRED_SPECIAL_CHARACTERS = True
+
+    # open redirect
+    ACCOUNT_LOGOUT_REDIRECT_URL='/'

@@ -3,6 +3,7 @@
 {% block content %}
 
     {% include 'partials/carousel.html' %}
+     
     <!-- Product Section Begin -->
     <div class="new-arrival">
         <div class="container">
@@ -23,9 +24,13 @@
                             <li {% if kategori == 'T' %}class="active" {% endif %}><a href="{% url 'toko:home-produk-list' %}?kategori=T">Tas</a></li>
                         <li>
                             <form method="get" action="{% url 'toko:home-produk-list' %}" id="search-form">
-                                <div class="form-group">
-                                    <input type="text" name="search" placeholder="Cari produk...">
-                                    <button type="submit" value="Cari" class="btn-primary">Cari</button>
+                                <div class="form-row justify-content-center">
+                                    <div class="col">
+                                        <input type="text" name="search" placeholder="Cari produk...">
+                                    </div>
+                                    <div class="col">
+                                        <button type="submit" value="Cari" class="btn-primary">Cari</button>
+                                    </div>
                                 </div>
                             </form>   
                         </li>
@@ -38,7 +43,7 @@
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 mb-3 mix {{ pItem.kategori }} galeri-item" data-kategori="{{ pItem.nama_produk }}">
                         <div class="single-new-arrival mb-50 text-center wow fadeInUp" id="data-galeri" data-wow-duration="1s" data-wow-delay=".1s">
                             <div class="popular-img">
-                                <img src="{{ pItem.gambar.url }}" alt="{{ pItem.nama_produk }}">
+                                <img src="{{ pItem.gambar.url }}" class="img-fluid" alt="{{ pItem.nama_produk }}">
                                 <div class="favorit-items">
                                     <!-- <span class="flaticon-heart"></span> -->
                                     <span class="badge bg-{{ pItem.get_label_display }} ms-2">{{ pItem.label }}</span>
@@ -92,28 +97,30 @@
 
     <!-- Instagram Section Begin -->
     <section class="instagram spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <div class="instagram__pic">
-                        <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-1.jpg' %}"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-2.jpg' %}"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-3.jpg' %}"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-4.jpg' %}"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-5.jpg' %}"></div>
-                        <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-6.jpg' %}"></div>
-                    </div>
+        <div class="photo-gallery">
+            <div class="container">
+                <div class="intro">
+                    <h2 class="text-center">Fashion Gallery</h2>
+                    <p class="text-center">"Style adalah sesuatu yang sudah kita miliki, yang perlu kita lakukan hanyalah menemukannya." —Diane von Furstenberg</p>
                 </div>
-                <div class="col-lg-4">
-                    <div class="instagram__text">
-                        <h2>Instagram</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                        
+                <div class="row photos text-center">
+                    {% for pItem in object_list %}
+                    <div class="col-sm-6 col-md-4 col-lg-3 item">
+                        <a href="{{ pItem.gambar.url }}" data-lightbox="photos">
+                            <img class="img-fluid" src="{{ pItem.gambar.url }}">
+                        </a>
                     </div>
+                    {% empty %}
+                    <div class="col-md-12 text-center my-5">
+                        <h2>(Data Produk belum tersedia)</h2>   
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
+       
+    </div>
+  
     </section>
     <!-- Instagram Section End -->
 
@@ -131,7 +138,7 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="{% static 'img/blog/blog-1.jpg' %}"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="https://picsum.photos/300/270?random=3"></div>
                         <div class="blog__item__text">
                             <span><i class="fa-regular fa-calendar"></i> 16 February 2020</span>
                             <h5>What Curling Irons Are The Best Ones</h5>
@@ -141,7 +148,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="{% static 'img/blog/blog-2.jpg' %}"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="https://picsum.photos/300/270?random=2"></div>
                         <div class="blog__item__text">
                             <span><i class="fa-regular fa-calendar"></i> 21 February 2020</span>
                             <h5>Eternity Bands Do Last Forever</h5>
@@ -151,7 +158,7 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="blog__item">
-                        <div class="blog__item__pic set-bg" data-setbg="{% static 'img/blog/blog-3.jpg' %}"></div>
+                        <div class="blog__item__pic set-bg" data-setbg="https://picsum.photos/300/270?random=1"></div>
                         <div class="blog__item__text">
                             <span><i class="fa-regular fa-calendar"></i> 28 February 2020</span>
                             <h5>The Health Benefits Of Sunglasses</h5>

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ProdukItem, OrderProdukItem, Order, AlamatPengiriman, Payment, ProdukImage
+from .models import ProdukItem, OrderProdukItem, Order, AlamatPengiriman, Payment, ProdukImage, Article
 
 class ProdukItemAdmin(admin.ModelAdmin):
     list_display = ['nama_produk','harga', 'harga_diskon', 'slug',
@@ -10,6 +10,9 @@ class ProdukImageAdmin(admin.ModelAdmin):
 
 class OrderProdukItemAdmin(admin.ModelAdmin):
     list_display = ['user', 'ordered', 'produk_item', 'quantity']
+
+class ArticleItemAdmin(admin.ModelAdmin):
+    list_display = ['title', 'content', 'image']
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['user', 'tanggal_mulai', 'tanggal_order', 'ordered']

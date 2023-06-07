@@ -6,19 +6,25 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.utils import timezone
 from django.views import generic
-from django.urls import reverse_lazy
-from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.html import escape
 from paypal.standard.forms import PayPalPaymentsForm
-from .forms import CheckoutForm, CommentForm
+from .forms import CheckoutForm, CommentForm, ContactForm
 from .models import ProdukItem, OrderProdukItem, Order, AlamatPengiriman, Payment, ProdukImage
 from django.http import HttpResponseRedirect
- 
+from django_ratelimit.decorators import ratelimit
+from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.core.mail import send_mail, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
+
+
 class HomeListView(generic.ListView):
     model = ProdukItem
     template_name = 'home.html'
     paginate_by = 8
     queryset = ProdukItem.objects.all()
-
+    @csrf_exempt
     def get_queryset(self):
         queryset = super().get_queryset()
         search_query  = self.request.GET.get('search', '')
@@ -43,7 +49,8 @@ class ProductDetailView(FormMixin, generic.DetailView):
     queryset = ProdukItem.objects.all()
     form_class = CommentForm
     success_url = '.' 
-
+    
+    @csrf_exempt
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         product = context['object']
@@ -54,6 +61,7 @@ class ProductDetailView(FormMixin, generic.DetailView):
             context['comment_form'].instance = CommentForm(initial={'object': product})  # Update instance dengan product
         return context
     
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()
@@ -75,6 +83,7 @@ class ProductDetailView(FormMixin, generic.DetailView):
 
 
 class CheckoutView(LoginRequiredMixin, generic.FormView):
+    @csrf_exempt
     def get(self, *args, **kwargs):
         form = CheckoutForm()
         try:
@@ -93,7 +102,8 @@ class CheckoutView(LoginRequiredMixin, generic.FormView):
         }
         template_name = 'checkout.html'
         return render(self.request, template_name, context)
-
+    
+    @csrf_exempt
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
         try:
@@ -127,6 +137,7 @@ class CheckoutView(LoginRequiredMixin, generic.FormView):
             return redirect('toko:order-summary')
 
 class PaymentView(LoginRequiredMixin, generic.FormView):
+    @csrf_exempt
     def get(self, *args, **kwargs):
         template_name = 'payment.html'
         try:
@@ -158,6 +169,7 @@ class PaymentView(LoginRequiredMixin, generic.FormView):
             return redirect('toko:checkout')
 
 class OrderSummaryView(LoginRequiredMixin, generic.TemplateView):
+    @csrf_exempt
     def get(self, *args, **kwargs):
         try:
             order = Order.objects.get(user=self.request.user, ordered=False)
@@ -169,7 +181,9 @@ class OrderSummaryView(LoginRequiredMixin, generic.TemplateView):
         except ObjectDoesNotExist:
             messages.error(self.request, 'Tidak ada pesanan yang aktif')
             return redirect('/')
-
+        
+@login_required
+@csrf_exempt
 def add_to_cart(request, slug):
     if request.user.is_authenticated:
         produk_item = get_object_or_404(ProdukItem, slug=slug)
@@ -199,7 +213,9 @@ def add_to_cart(request, slug):
             return redirect('toko:produk-detail', slug = slug)
     else:
         return redirect('/accounts/login')
-
+    
+@login_required    
+@csrf_exempt
 def min_to_cart(request, slug):
     if request.user.is_authenticated:
         produk_item = get_object_or_404(ProdukItem, slug=slug)
@@ -236,7 +252,9 @@ def min_to_cart(request, slug):
             return redirect('toko:produk-detail',slug = slug)
     else:
         return redirect('/accounts/login')
-
+    
+@login_required    
+@csrf_exempt
 def remove_from_cart(request, slug):
     if request.user.is_authenticated:
         produk_item = get_object_or_404(ProdukItem, slug=slug)
@@ -269,8 +287,9 @@ def remove_from_cart(request, slug):
             return redirect('toko:order-summary')
     else:
         return redirect('/accounts/login')
-
-# @csrf_exempt
+    
+@login_required
+@csrf_exempt
 def paypal_return(request):
     if request.user.is_authenticated:
         try:
@@ -299,10 +318,56 @@ def paypal_return(request):
     else:
         return redirect('/accounts/login')
 
-# @csrf_exempt
+@csrf_exempt
 def paypal_cancel(request):
     messages.error(request, 'Pembayaran dibatalkan')
     return redirect('toko:order-summary')
 
+@csrf_exempt
 def ContactView(request):
     return render(request, 'contact.html')
+
+def contact(request):
+    
+    form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data["subject"]
+            from_email = form.cleaned_data["from_email"]
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, ["arincantikam@gmail.com"])
+            except BadHeaderError:
+                return HttpResponse("Invalid header found.")
+            messages.info(request, 'Thankyou, Pesan berhasil terkirim!')
+    return render(request, "contact.html", {"form": form})
+
+
+class ContactView(generic.FormView):
+    @csrf_exempt
+    def get(self, *args, **kwargs):
+        form = ContactForm()
+        context = {
+            'form': form,
+        }
+        template_name = 'contact.html'
+        return render(self.request, template_name, context)
+    
+    @csrf_exempt
+    def post(self, *args, **kwargs):
+        form = ContactForm(self.request.POST or None)
+        
+        if form.is_valid():
+            subject = form.cleaned_data.get('subject')
+            from_email = form.cleaned_data.get('from_email')
+            message = form.cleaned_data.get('message')
+            try:
+                send_mail(subject, message, from_email, ["arincantikam@gmail.com"])
+            except BadHeaderError:
+                messages.error(self.request, 'Pesan gagal dikirim!')
+                return redirect('toko:contact')
+            messages.info(self.request, 'Thankyou, Pesan berhasil terkirim!')
+            return redirect('toko:contact')
+
+      

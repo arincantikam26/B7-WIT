@@ -35,7 +35,7 @@
                 <nav class="header__menu mobile-menu">
                     <ul>
                         <li {% if request.path == '/' %}class="active"{% endif %}><a href="/">Home</a></li>
-                        <li {% if request.path == "/shop/" %}class="active"{% endif %}><a href="#">Shop</a></li>
+                        <li {% if request.path == "/checkout/" %}class="active"{% endif %}><a href="{% url 'toko:checkout' %}">Checkout</a></li>
                         <li {% if request.path == "/contact/" %}class="active"{% endif %}><a href="{% url 'toko:contact' %}">Contacts</a></li>
                     </ul>
                 </nav>

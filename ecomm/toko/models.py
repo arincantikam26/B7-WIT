@@ -75,7 +75,15 @@ class ProdukImage(models.Model):
     class Meta:
         verbose_name_plural = 'ProdukImage'
 
-    
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='product_pics')
+
+    def __str__(self):
+        return self.title
+
 class OrderProdukItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False)

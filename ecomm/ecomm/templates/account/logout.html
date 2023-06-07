@@ -6,21 +6,25 @@
 
 {% block content %}
 <main>
-  <div class="container">
-    <div class="my-3 col-6 offset-3">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card  bg-light shadow p-3 mb-5 bg-white" style="border-radius: 1rem;">
+          <div class="card-body p-5 text-center">
+            <h3 class=" mb-2">{% trans "Sign Out" %}</h3>
 
-      <h1>{% trans "Sign Out" %}</h1>
+            <p>{% trans 'Are you sure you want to sign out?' %}</p>
 
-      <p>{% trans 'Are you sure you want to sign out?' %}</p>
-
-      <form method="post" action="{% url 'account_logout' %}">
-        {% csrf_token %}
-        {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-        {% endif %}
-        <button class="btn btn-danger" type="submit">{% trans 'Sign Out' %}</button>
-      </form>
-
+            <form method="post" action="{% url 'account_logout' %}">
+              {% csrf_token %}
+              {% if redirect_field_value %}
+              <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+              {% endif %}
+              <button class="btn btn-danger btn-block" type="submit">{% trans 'Sign Out' %}</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </main>

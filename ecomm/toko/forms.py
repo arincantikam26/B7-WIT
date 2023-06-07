@@ -20,3 +20,28 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('text',)
+
+class ContactForm(forms.Form):
+    from_email = forms.EmailField(widget=forms.EmailInput(
+        attrs={
+            'placeholder': 'name@mail.com', 
+            'class': 'form-control"',
+            'id':'email'
+            })
+        , required=True, max_length=100)
+    subject = forms.CharField(widget=forms.TextInput(
+        attrs={
+            'placeholder': 'Subject..', 
+            'class': 'form-control"',
+            'id': 'subject'
+            })
+        , required=True, max_length=100)
+    message = forms.CharField(widget=forms.Textarea(
+        attrs={
+            'placeholder': 'Masukkan pesan disini..', 
+            'class': 'form-control"', 
+            'cols':'30',
+            'rows': '5',
+            'id': 'message'
+            })
+        , required=True)
