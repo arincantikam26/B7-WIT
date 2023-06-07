@@ -22,7 +22,7 @@ $ python manage.py runserver
 github : https://github.com/arincantikam26/Ecommerce_B7.git
 base template : https://themewagon.github.io/malefashion/
 
-### Team
+### Team Kelas B-7
 1. Arin Cantika Musi
 2. Ulrike Johanna Hutabarat
 3. Endang Febriawati
