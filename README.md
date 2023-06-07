@@ -19,8 +19,8 @@ $ python manage.py runserver
 ```
 
 ### Copyright
-github : https://github.com/arincantikam26/Ecommerce_B7.git
-base template : https://themewagon.github.io/malefashion/
+- github : https://github.com/arincantikam26/Ecommerce_B7.git 
+- base template : https://themewagon.github.io/malefashion/
 
 ### Team Kelas B-7
 1. Arin Cantika Musi
