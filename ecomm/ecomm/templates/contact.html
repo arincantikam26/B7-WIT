@@ -43,26 +43,41 @@
         </div>
         <div class="row mt-3">
             <div class="col-md-6">
-                <div class="form__contact">
+                <div class="form__contact p-3">
                     <h3>Apakah anda punya pertanyaan?</h3>
                     <p>Selalu sedia 24 jam per hari, silahkan dihubungi.</p>
-                    <form class="needs-validation" action="" novalidate>
+                    <form class="needs-validation" method="post" novalidate>
+                        {% csrf_token %}
+                      
                         <div class="form-group">
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name" value="" required>
+                            <label for="email">Email address</label>
+                            {{ form.from_email }}
                             <div class="valid-feedback">
                             Looks good!
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" name="email" id="email"  placeholder="Enter your email" aria-describedby="inputGroupPrepend3" required>
-                            <div class="valid-feedback">
-                                Looks good!
+                            <div class="invalid-feedback">
+                                Please input your correct email.
                             </div>
                         </div>
                         <div class="form-group">
-                            <textarea name="msg" class="form-control" id="msg" cols="30" rows="5" placeholder="Enter your message"></textarea>
+                            <label for="subject">Subject</label>
+                            {{ form.subject }}
+                            <div class="valid-feedback">
+                                Looks good!
+                            </div>
+                            <div class="invalid-feedback">
+                                Please input your subject.
+                            </div>
                         </div>
-                        <input type="submit" value="submit" class="btn btn-primary">
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            {{ form.message }}
+                            <div class="invalid-feedback">
+                                Please input your message.
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-contact">Kirim</button>
+                        
                     </form>
                 </div>
             </div>
@@ -98,6 +113,8 @@
         });
     }, false);
     })();
+
+    
 </script>
 
 {% endblock content %}

@@ -16,5 +16,26 @@ document.addEventListener('DOMContentLoaded', function() {
         behavior: 'smooth'
       });
     });
+    
   });
   
+  function scrollToTarget() {
+    const targetDiv = document.getElementById('section-tittle');
+    targetDiv.scrollIntoView({ behavior: 'smooth' });
+}
+
+$(document).ready(function(){
+  $(".fancybox").fancybox({
+        openEffect: "none",
+        closeEffect: "none"
+    });
+    
+    $(".zoom").hover(function(){
+		
+		$(this).addClass('transition');
+	}, function(){
+        
+		$(this).removeClass('transition');
+	});
+});
+    

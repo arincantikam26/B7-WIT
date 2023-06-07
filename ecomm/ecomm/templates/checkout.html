@@ -1,68 +1,48 @@
 {% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% load crispy_forms_tags %}
 
-    <!--Main layout-->
-<main class="mt-5">
+{% block content%}
+<!--Main layout-->
+<div class="checkout">
     <div class="container">
         <!-- Heading -->
         <h2 class="my-5 text-center">Checkout</h2>
-
-        <form method="POST" name="formCheckout">
-            {% csrf_token %}
-            <!--Grid row-->
-            <div class="row">
-                <!--Grid column-->
-                <div class="col-md-8 mb-4">
-                    <!--Card-->
+        <div class="row">
+            <div class="col-md-8 mb-4">
+                <form method="POST" name="formCheckout">
+                    {% csrf_token %}
                     <div class="card p-4">
-                        <!--Grid row-->
-                    
-                        <!--address-->
-                        <p class="mb-0">
-                            Alamat Lengkap
-                        </p>
-                        <div class="form-outline mb-4">
-                            {{ form.alamat_1 }}
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Alamat Lengkap</label>
+                            <div class="form-outline">
+                                {{ form.alamat_1 }}
+                            </div>    
                         </div>
-
-                        <!--address-2-->
-                        <p class="mb-0">
-                            Alamat Gedung (optional)
-                        </p>
-                        <div class="form-outline mb-4">
-                            {{ form.alamat_2 }}
+                        <div class="form-group">
+                            <label for="exampleFormControlInput1">Alamat Gedung (optional)</label>
+                            <div class="form-outline">
+                                {{ form.alamat_2 }}
+                            </div>  
                         </div>
-
-                        <!--Grid row-->
                         <div class="row">
-                            <!--Grid column-->
                             <div class="col-lg-4 col-md-12 mb-4">
-                                <p class="mb-0">
-                                    Negara
-                                </p>
+                                
+                                    <label for="exampleFormControlInput1">Negara</label>
                                     <div class="form-outline">
-                                    {{ form.negara }}
-                                </div>
+                                        {{ form.negara }}
+                                    </div>
+                                
                             </div>
-                            <!--Grid column-->
-
-                            <!--Grid column-->
                             <div class="col-lg-4 col-md-12 mb-4">
-                                <p class="mb-0">
-                                    Kode Pos
-                                </p>
-                                <div class="form-outline">
-                                    {{ form.kode_pos }}
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Kode Pos</label>
+                                    <div class="form-outline">
+                                        {{ form.kode_pos }}
+                                    </div>
                                 </div>
                             </div>
-                            <!--Grid column-->
                         </div>
-                        <!--Grid row-->
-
-                        <hr />
-
-                        <div class="my-3">
+                        <div class="form-group">
                             {% for value, name in form.fields.opsi_pembayaran.choices %}
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="opsi_pembayaran" id="{{ name }}" value="{{ value }}"  required />
@@ -70,51 +50,43 @@
                             </div>
                             {% endfor %}
                         </div>
-                        <hr class="mb-4" />                    
-                    <button class="btn btn-primary" type="submit" {% if order.get_total_harga_order <= 0 %}disabled{% endif %}>Lanjutkan checkout</button>
+                        <button class="btn btn-checkout" type="submit" {% if order.get_total_harga_order <= 0 %}disabled{% endif %}>Lanjutkan checkout</button>
                     </div>
-                    <!--/.Card-->
-                </div>
-                <!--Grid column-->
-                
-                
-                <!--Grid column-->
-                <div class="col-md-4 mb-4">
-                    <!-- Heading -->
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Keranjang Belanja</span>
-                        <span class="badge rounded-pill badge-primary">{{ keranjang.produk_items.count }}</span>
-                    </h4>
-
-                    <!-- Cart -->
-                    <ul class="list-group mb-3">
-                        {% for belanjaan in keranjang.produk_items.all %}
-                        <li class="list-group-item d-flex justify-content-between">
-                            <div>
-                                <h6 class="my-0">{{ belanjaan.quantity }} x {{ belanjaan.produk_item.nama_produk }}</h6>
-                                <small class="text-muted">{{ belanjaan.produk_item.deskripsi|truncatechars:50 }}</small>
-                            </div>
-                            {% if belanjaan.produk_item.harga_diskon %}
-                            <span class="text-muted"><small>Rp </small>{{ belanjaan.get_total_harga_diskon_item }}
-                            {% else %}
-                            <small>Rp </small>{{ belanjaan.get_total_harga_item}}
-                            {% endif %}
-                        </li>
-                        {% endfor %}
-
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Total (Rupiah)</span>
-                            <strong class="text-success"><small>Rp </small>{{ keranjang.get_total_harga_order }}</strong>
-                        </li>
-                    </ul>
-                    <!-- Cart -->
-                </div>
-                <!--Grid column-->
+                </form>
             </div>
-            <!--Grid row-->
-        </form>
+            <div class="col-md-4 mb-4">
+                <!-- Heading -->
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Keranjang Belanja</span>
+                    <span class="badge rounded-pill badge-primary">{{ keranjang.produk_items.count }}</span>
+                </h4>
+
+                <!-- Cart -->
+                <ul class="list-group mb-3">
+                    {% for belanjaan in keranjang.produk_items.all %}
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div>
+                            <h6 class="my-0">{{ belanjaan.quantity }} x {{ belanjaan.produk_item.nama_produk }}</h6>
+                            <small class="text-muted">{{ belanjaan.produk_item.deskripsi|truncatechars:50 }}</small>
+                        </div>
+                        {% if belanjaan.produk_item.harga_diskon %}
+                        <span class="text-muted"><small>Rp </small>{{ belanjaan.get_total_harga_diskon_item }}
+                        {% else %}
+                        <small>Rp </small>{{ belanjaan.get_total_harga_item}}
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (Rp)</span>
+                        <strong class="text-success"><small>Rp </small>{{ keranjang.get_total_harga_order }}</strong>
+                    </li>
+                </ul>
+                <!-- Cart -->
+            </div>
+        </div>
     </div>
-</main>
+</div>
 <!--Main layout-->
 
 {% endblock content %}

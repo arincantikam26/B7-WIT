@@ -1,16 +1,12 @@
+from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
-from django.core.validators import FileExtensionValidator
-from PIL import Image
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.contrib.auth import get_user_model
-
-# Create your models here.
 
 PILIHAN_KATEGORI = (
-    ('S', 'Sepatu'),
     ('T', 'Tas'),
-    ('B', 'Baju')
+    ('B', 'Baju'),
+    ('S', 'Sepatu')
 )
 
 PILIHAN_LABEL = (
@@ -32,38 +28,61 @@ class ProdukItem(models.Model):
     harga_diskon = models.FloatField(blank=True, null=True)
     slug = models.SlugField(unique=True)
     deskripsi = models.TextField()
-    gambar = models.ImageField(upload_to='product_pics', validators=[FileExtensionValidator(['jpg', 'jpeg', 'png'])])
+    gambar = models.ImageField(upload_to='product_pics')
     label = models.CharField(choices=PILIHAN_LABEL, max_length=4)
+    rating = models.IntegerField(default=0)
     kategori = models.CharField(choices=PILIHAN_KATEGORI, max_length=2)
-    
+
     def __str__(self):
         return f"{self.nama_produk} - ${self.harga}"
-    
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        img = Image.open(self.gambar.path)
-        max_size = (260, 260)
-        if img.height > max_size[1] or img.width > max_size[0]:
-            img.thumbnail(max_size)
-            img.save(self.gambar.path)
 
     def get_absolute_url(self):
         return reverse("toko:produk-detail", kwargs={
             "slug": self.slug
-        })
-    
+            })
+
     def get_add_to_cart_url(self):
         return reverse("toko:add-to-cart", kwargs={
             "slug": self.slug
-        })
+            })
     
     def get_remove_from_cart_url(self):
         return reverse("toko:remove-from-cart", kwargs={
             "slug": self.slug
-        })
+            })
     
+    def get_minus_from_cart_url(self):
+        return reverse("toko:min_to_cart", kwargs={
+            "slug": self.slug
+            })
+    
+class Comment(models.Model):
+    product = models.ForeignKey(ProdukItem, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # asumsikan ada model User yang digunakan untuk mengidentifikasi pengguna
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.nama_produk}"
+    
+class ProdukImage(models.Model):
+    produk = models.ForeignKey(ProdukItem, on_delete=models.CASCADE)
+    gambar = models.ImageField(upload_to='product_pics', default='product_pics/no_image.png')
+
+    def __str__(self):
+        return self.produk.nama_produk + " - " + str(self.id)
+
     class Meta:
-        verbose_name_plural = "ProdukItem"
+        verbose_name_plural = 'ProdukImage'
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='product_pics')
+
+    def __str__(self):
+        return self.title
 
 class OrderProdukItem(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -76,6 +95,9 @@ class OrderProdukItem(models.Model):
 
     def get_total_harga_item(self):
         return self.quantity * self.produk_item.harga
+    
+    def get_quantity_item(self):
+        return self.quantity
     
     def get_total_harga_diskon_item(self):
         return self.quantity * self.produk_item.harga_diskon
@@ -92,19 +114,8 @@ class OrderProdukItem(models.Model):
         if self.produk_item.harga_diskon:
             return self.get_total_hemat_item()
         return 0
-    
-class AlamatPengiriman(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    alamat_1 = models.CharField(max_length=100)
-    alamat_2 = models.CharField(max_length=100)
-    negara = models.CharField(max_length=100)
-    kode_pos = models.CharField(max_length=20)
+        
 
-    def __str__(self):
-        return f"{self.user.username} - {self.alamat_1}"
-
-    class Meta:
-        verbose_name_plural = 'AlamatPengiriman'
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -117,7 +128,6 @@ class Order(models.Model):
 
     def __str__(self):
         return self.user.username
-
      
     def get_total_harga_order(self):
         total = 0
@@ -130,6 +140,19 @@ class Order(models.Model):
         for order_produk_item in self.produk_items.all():
             total += order_produk_item.get_total_hemat_keseluruhan()
         return total
+
+class AlamatPengiriman(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    alamat_1 = models.CharField(max_length=100)
+    alamat_2 = models.CharField(max_length=100)
+    negara = models.CharField(max_length=100)
+    kode_pos = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.alamat_1}"
+
+    class Meta:
+        verbose_name_plural = 'AlamatPengiriman'
 
 class Payment(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
