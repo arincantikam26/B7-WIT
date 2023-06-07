@@ -9,11 +9,11 @@
 
 ### Running Program
 1. Migrasi database 
-'''
+```
 $ python manage.py makemigrations toko
 $ python manage.py migrate
-'''
+```
 2. Jalankan program
-'''
+```
 $ python manage.py runserver
-'''
+```
